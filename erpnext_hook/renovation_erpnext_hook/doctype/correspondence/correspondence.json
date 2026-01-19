@@ -1,0 +1,231 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-02-24 19:56:47.532775",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "to",
+  "email",
+  "address",
+  "column_break_4",
+  "status",
+  "date",
+  "project_information_section",
+  "client",
+  "client_abbrv",
+  "consultant",
+  "main_contractor",
+  "subcontractor",
+  "column_break_12",
+  "project",
+  "project_name",
+  "master_project",
+  "master_project_name",
+  "section_break_16",
+  "subject",
+  "column_break_19",
+  "email_type",
+  "correspondence_type",
+  "master",
+  "section_break_17",
+  "content",
+  "cc"
+ ],
+ "fields": [
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Client",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email",
+   "options": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Link",
+   "label": "Address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Subject",
+   "reqd": 1
+  },
+  {
+   "fieldname": "main_contractor",
+   "fieldtype": "Link",
+   "label": "Main Contractor",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "consultant",
+   "fieldtype": "Link",
+   "label": "Consultant",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "subcontractor",
+   "fieldtype": "Link",
+   "label": "Subcontractor",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Text Editor",
+   "label": "Content"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nApproved\nSent"
+  },
+  {
+   "fieldname": "email_type",
+   "fieldtype": "Select",
+   "label": "Email Type",
+   "options": "Incoming\nOutgoing"
+  },
+  {
+   "depends_on": "eval: doc.correspondence_type === \"Reply\"",
+   "fieldname": "master",
+   "fieldtype": "Link",
+   "label": "Master",
+   "mandatory_depends_on": "eval: doc.correspondence_type === \"Reply\"",
+   "options": "Correspondence"
+  },
+  {
+   "fieldname": "cc",
+   "fieldtype": "Table",
+   "label": "CC",
+   "options": "Correspondence CC"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "project_information_section",
+   "fieldtype": "Section Break",
+   "label": "Project Information"
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break",
+   "label": "Email Details"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "correspondence_type",
+   "fieldtype": "Select",
+   "label": "Correspondence Type",
+   "options": "Master\nReply"
+  },
+  {
+   "fieldname": "section_break_17",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fetch_from": "project.project_name",
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "\nE-.{client_abbrv}.-.{master_project_name}.-.{project_name}.-.YYYY.-.#####\nM-.{client_abbrv}.-.{master_project_name}.-.{project_name}.-.YYYY.-.#####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Link",
+   "label": "To",
+   "options": "Contact",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_abbrv",
+   "fieldtype": "Data",
+   "label": "Client Abbreviation",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "project.master_project",
+   "fieldname": "master_project",
+   "fieldtype": "Link",
+   "label": "Master Project",
+   "options": "Master Project",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "master_project.project_name",
+   "fieldname": "master_project_name",
+   "fieldtype": "Data",
+   "label": "Master Project Name",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-02-28 02:32:27.923621",
+ "modified_by": "Administrator",
+ "module": "Renovation Erpnext Hook",
+ "name": "Correspondence",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1,
+   "import": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "allow_import": 1
+}

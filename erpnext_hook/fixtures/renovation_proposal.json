@@ -1,0 +1,57 @@
+[
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Proposal", 
+  "modified": "2019-04-01 13:39:03.486618", 
+  "name": "0", 
+  "p_name": "0", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "status": "Pending"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Proposal", 
+  "modified": "2019-04-01 13:39:03.489889", 
+  "name": "1", 
+  "p_name": "1", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "status": "Submitted"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Proposal", 
+  "modified": "2019-04-01 13:39:03.493232", 
+  "name": "2", 
+  "p_name": "2", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "status": "Awaiting Approval"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Proposal", 
+  "modified": "2019-04-01 13:39:03.497131", 
+  "name": "3", 
+  "p_name": "3", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "status": "Accepted"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Proposal", 
+  "modified": "2019-04-01 13:39:03.500314", 
+  "name": "4", 
+  "p_name": "4", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "status": "Rejected"
+ }
+]

@@ -1,0 +1,1 @@
+cur_frm.add_fetch('email_template', 'response', 'message')

@@ -1,0 +1,32 @@
+[
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Work Order Type", 
+  "modified": "2019-04-01 17:58:03.098093", 
+  "name": "Work Order $", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "title": "Work Order $"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Work Order Type", 
+  "modified": "2019-04-03 13:23:46.829544", 
+  "name": "Work Order", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "title": "Work Order"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Renovation Work Order Type", 
+  "modified": "2019-06-23 13:47:15.793089", 
+  "name": "Awaiting Proposal", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "title": "Awaiting Proposal"
+ }
+]

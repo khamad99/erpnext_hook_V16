@@ -1,0 +1,26 @@
+[
+ {
+  "docstatus": 0, 
+  "doctype": "Workflow State", 
+  "icon": "", 
+  "modified": "2019-07-06 21:56:47.149935", 
+  "name": "Canceled", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "style": "Danger", 
+  "workflow_state_name": "Canceled"
+ }, 
+ {
+  "docstatus": 0, 
+  "doctype": "Workflow State", 
+  "icon": "", 
+  "modified": "2019-07-06 22:02:44.913628", 
+  "name": "Approved by first level", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "style": "Success", 
+  "workflow_state_name": "Approved by first level"
+ }
+]

@@ -1,0 +1,28 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2021-02-27 07:41:58.077740",
+  "name": "Cheque Payment Reminder",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "response": "<div class=\"ql-editor read-mode\"><p>Dears,</p><p><br></p><p>Please note that the payment entry {{doc.name}} related to the customer {{doc.party}} &nbsp;is due in {{days}} days.</p><p><br></p><p>Thanks!</p></div>",
+  "response_html": null,
+  "subject": "Cheque Payment Due Soon",
+  "use_html": 0
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2021-02-27 07:58:15.135616",
+  "name": "Retention Release",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "response": "<div class=\"ql-editor read-mode\"><p>Dear,</p><p><br></p><p>Please note that the Sales Invoice {{doc.name}} &nbsp;for the customer {{doc.customer}} ended the retention today.</p><p><br></p><p>Thanks!</p></div>",
+  "response_html": null,
+  "subject": "Retention Release",
+  "use_html": 0
+ }
+]

@@ -1,0 +1,26 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Project",
+  "enabled": 1,
+  "modified": "2021-02-27 06:18:06.625532",
+  "name": "Project",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "this.frm.dashboard.add_transactions([\n        {\n            \"label\": \"Project\",\n            \"items\": [\n                \"Correspondence\"\n            ]\n        },\n        {\n            \"label\": \"Sales\",\n            \"items\": [\n                \"Quotation\",\n                \"Contract\"\n            ]\n        }\n    ]\n)"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Contract",
+  "enabled": 1,
+  "modified": "2021-02-27 06:38:42.836578",
+  "name": "Contract",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "script": "frappe.ui.form.on('Contract', {\n    document_name: handleProject,\n    document_type: handleProject\n})\n\n\nfunction handleProject(frm) {\n\n    if (frm.doc.document_type\n        && frm.doc.document_type === 'Project'\n        && frm.doc.document_name\n        && frm.doc.document_name !== '') {\n        frm.set_value('project', frm.doc.document_name);\n    } else {\n        frm.set_value('project', '');\n        frm.set_value('master_project', '');\n        frm.set_value('document_name', '');\n    }\n\n}"
+ }
+]

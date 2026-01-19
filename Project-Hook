@@ -1,0 +1,104 @@
+-- J. No.|building no | flat | description?/category | remaining (duedate - today)
+
+Order Status
+{
+    state:
+    email template: link
+}
+
+Tenant
+{
+    TENANCY CONTRACT NO.
+    TENANT’S NAME
+    TENANT’S CONTACT NO.
+    CALLER’S NAME
+    CALLER’S CONTACT NO.
+}
+Property
+{
+    Type: [ Flat / Office /Shops/ Penthouse /Common area]
+    No.
+    building: link
+}
+building
+{
+    Building No:
+    SECTOR:
+    PLOT NO:
+    Owner name:
+}
+
+Sales Order or Job Order
+{
+    Order Type: Work Order / Contractual Order / sales order
+    Order Status: link
+    Job Number: Number
+    job duedate/PRIORITY : number
+    category:
+
+    Property: link
+    tenant: lik
+    Signature: image
+
+}
+Job Order Update Request
+{
+    Request Type: [Quotation, Completion/Cancelation, Status Update]
+    Status: link // the status to be updated
+    images: images[] -> png/jpeg
+    Signature: image -> bitmap
+    is send email: checkbox
+    Email Template: //auto selected based on request and it will be text edit field
+}
+
+Email Template
+{
+    title
+    email content
+}
+
+-- Sales  Order Types:
+  --- Work Order
+  --- Contractual Order
+
+
+  New order -> if new build/property/tenant then add
+
+
+  Sample Email title:
+  Building # P/646 FLAT 103 - ADCP Job # 0923674
+    attachement: html
+
+-- Sales Oder Statuses:
+      --- Under Progress:
+        --- if C: upon Contractual Job Order Email Recipent
+        --- if Work Order: Quotation Apporove
+      --- Under Progress (Pending Feedback)
+      --- Cancellation request (Pending Approval)
+      --- Remaining balance not approve
+      --- Pending Quotaion approval
+      --- Completed
+      --- Canceled
+
+-- Employee Interface:
+  --- Order Status Update Request
+    --- Request Email + attachement + Notes is compulsory:
+      --- Tenant not avaialbe
+      --- Tenant refuses reparing
+      --- Tenant refuses work
+      --- Under Third Party Reponsebilty AC/EC/main Contract
+      --- Under Tenant responosilty
+
+    --- Completion/Cancelation Request + attachement +  Notes is compulsory:
+      --- Done + Signature (image)
+      --- Cancelation
+
+    --- Request Quotation + attachement + Notes is compulsory:
+       --- RFQ Qutation items -- search link
+       --- Status Chanage: Pending Quotaion approval
+       --- Change to Quotable/work order
+
+-- Auto Categorization (saintry, plumpling, ...) based on descriptions (provided in email attachement in html)
+
+
+----------------------------------------
