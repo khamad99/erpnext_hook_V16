@@ -59,4 +59,20 @@ def _patched_find_file_by_url(path, name=None):
 
 # Apply patch to original module AND handler which imports it
 file_utils.find_file_by_url = _patched_find_file_by_url
+
+# Apply patch to original module AND handler which imports it
+file_utils.find_file_by_url = _patched_find_file_by_url
 handler_module.find_file_by_url = _patched_find_file_by_url
+
+
+# ----------------------------------------------------------------------------
+# Patch validate_ignore_user_permissions to bypass strict check
+# This allows client-side requests to ignore permissions even if field config doesn't allow it
+# ----------------------------------------------------------------------------
+import frappe.desk.search
+
+def _patched_validate_ignore_user_permissions(form_doctype, link_fieldname, link_doctype):
+    pass # Bypass validation
+
+frappe.desk.search.validate_ignore_user_permissions = _patched_validate_ignore_user_permissions
+
