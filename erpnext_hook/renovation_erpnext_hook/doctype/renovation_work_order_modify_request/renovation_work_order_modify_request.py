@@ -193,7 +193,7 @@ class RenovationWorkOrderModifyRequest(Document):
 		self.clear_assigned_user_from_wo()
 
 	def clear_assigned_user_from_wo(self):
-		if self.work_order_no and self.status in('Request Reassignment', 'Cancel Request', 'Work complete'):
+		if self.work_order_no:
 			doctype = 'Renovation Work Order'
 			prev_assigned = []
 			for assign_to in frappe.db.sql_list("""select owner from `tabToDo`
@@ -205,7 +205,7 @@ class RenovationWorkOrderModifyRequest(Document):
 				wo.db_set('prev_assigned', json.dumps(prev_assigned))
 	
 	def re_assign_wo_users(self):
-		if self.work_order_no and self.status in('Request Reassignment', 'Cancel Request', 'Work complete'):
+		if self.work_order_no:
 			doctype = 'Renovation Work Order'
 			doc = frappe.get_doc(doctype, self.work_order_no)
 			if doc.prev_assigned:
