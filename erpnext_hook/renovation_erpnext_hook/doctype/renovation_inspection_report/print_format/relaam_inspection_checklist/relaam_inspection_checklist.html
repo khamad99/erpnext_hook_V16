@@ -1,0 +1,167 @@
+<div class="print-format">
+    <style>
+        @page {
+            margin-top: 25mm;
+            margin-bottom: 15mm;
+            margin-left: 3mm;
+            margin-right: 3mm;
+        }
+    </style>
+    <div class="header-row"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+        <div class="logo">
+            <img src="/assets/erpnext_hook/images/Relaam_logo.png" width="150" style="width: 150px;">
+        </div>
+        <div class="title" style="text-align: right;">
+            <h5 style="margin: 0; font-weight: bold; text-transform: uppercase;">TENANT MOVE OUT INSPECTION LIST</h5>
+        </div>
+    </div>
+
+    <div class="header-info" style="margin-bottom: 20px;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td><strong>A. NAME OF TENANT:</strong> {{ doc.customer }}</td>
+                <td><strong>D. FACILITIES MANAGEMENT COMPANY:</strong> {{ doc.facilities_management_company }}</td>
+            </tr>
+            <tr>
+                <td><strong>B. PROPERTY NAME & Unit No.:</strong> {{ doc.property_name or '' }} {{ doc.unit or '' }}
+                </td>
+                <td><strong>E. REPORT PREPARATION DATE:</strong> {{ doc.get_formatted("report_preparation_date") }}</td>
+            </tr>
+            <tr>
+                <td><strong>C. INSPECTION ID:</strong> {{ doc.inspection_id or '' }}</td>
+                <td><strong>F. MOVE-OUT DATE:</strong> {{ doc.get_formatted("scheduled_completion_date") }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>G. MOVE-OUT INSPECTION DATE:</strong> {{ doc.get_formatted("transaction_date") }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="checklist-section">
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th style="width: 5%">SN</th>
+                    <th style="width: 20%">Area / Room</th>
+                    <th style="width: 20%">Assets</th>
+                    <th style="width: 25%">Description</th>
+                    <th style="width: 10%">Amount</th>
+                    <th style="width: 20%">Contractor Comments<br>(TT - LL - AMC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set ns = namespace(total_tenant=0.0, total_landlord=0.0, idx=0) %}
+
+                {# Filter items to exclude those with empty description #}
+                {% set valid_items = [] %}
+                {% if doc.inspection_checklist %}
+                {% for row in doc.inspection_checklist %}
+                {% if row.description %}
+                {% set _ = valid_items.append(row) %}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                {% if valid_items %}
+
+                {# Group items by Area to merge cells #}
+                {% for area, items in valid_items|groupby('area') %}
+                {% for row in items %}
+
+                {# Calculate totals #}
+                {% if row.amount %}
+                {% if row.contractor_comments and "TT" in row.contractor_comments %}
+                {% set ns.total_tenant = ns.total_tenant + row.amount %}
+                {% endif %}
+                {% if row.contractor_comments and "LL" in row.contractor_comments %}
+                {% set ns.total_landlord = ns.total_landlord + row.amount %}
+                {% endif %}
+                {% endif %}
+
+                {# Increment global index #}
+                {% set ns.idx = ns.idx + 1 %}
+
+                <tr>
+                    <td>{{ ns.idx }}</td>
+
+                    {# Render Area cell only for the first item in the group #}
+                    {% if loop.first %}
+                    <td rowspan="{{ items|length }}" style="vertical-align: middle;">{{ area }}</td>
+                    {% endif %}
+
+                    <td>{{ row.asset }}</td>
+                    <td>{{ row.description or '' }}</td>
+                    <td style="text-align: right;">{{ "{:,.2f}".format(row.amount) if row.amount else '' }}</td>
+                    <td>{{ row.contractor_comments or '' }}</td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">No checklist items found.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="totals-section" style="margin-top: 10px; break-inside: avoid;">
+        <table class="table table-bordered" style="width: 40%; margin-left: auto;">
+            <tr>
+                <td><strong>Total Amount by Tenant</strong></td>
+                <td style="text-align: right;">{{ frappe.format(ns.total_tenant, "Currency", doc) }}</td>
+            </tr>
+            <tr>
+                <td><strong>Total Amount by Landlord</strong></td>
+                <td style="text-align: right;">{{ frappe.format(ns.total_landlord, "Currency", doc) }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="signature-section" style="margin-top: 50px; break-inside: avoid;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 45%; vertical-align: bottom; padding-bottom: 20px;">
+                    <!-- Left: Tenant Signature -->
+                    <div style="display: flex; align-items: flex-end;">
+                        <strong>Tenant Signature (move out):</strong>
+                        <div style="border-bottom: 1px solid #000; flex-grow: 1; margin-left: 10px; height: 1px;"></div>
+                    </div>
+                </td>
+                <td style="width: 10%;"></td>
+                <td style="width: 45%; vertical-align: bottom;">
+                    <!-- Right: Inspector Signature -->
+                    <!-- Image pushed up via margin to sit 'on/above' the line -->
+                    <div
+                        style="text-align: right; margin-bottom: -40px; position: relative; z-index: 1; margin-right: 20px;">
+                        <img src="https://almaidana-backend.leam.ae/files/signature.png" width="150" height="auto">
+                    </div>
+
+                    <div style="display: flex; align-items: flex-end; position: relative; z-index: 2;">
+                        <strong>Move Out Inspector Signature:</strong>
+                        <div style="border-bottom: 1px solid #000; flex-grow: 1; margin-left: 10px; height: 1px;"></div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; margin-top: 10px;">
+                        <strong>Date:</strong>
+                        <div
+                            style="border: 1px solid #000; padding: 5px; min-width: 100px; text-align: center; margin-left: 10px;">
+                            {{ frappe.utils.format_date(doc.creation) }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Footer for Page Numbering -->
+    <div id="footer-html" class="visible-pdf">
+        <p class="text-center small" style="text-align: center; font-size: 10px;">
+            Page <span class="page"></span> of <span class="topage"></span>
+        </p>
+    </div>
+
+</div>

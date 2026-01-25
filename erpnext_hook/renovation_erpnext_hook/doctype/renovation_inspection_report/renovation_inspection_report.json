@@ -1,0 +1,159 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 1,
+    "creation": "2025-01-24 19:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "inspection_id",
+        "renovation_work_order",
+        "customer",
+        "property_name",
+        "unit",
+        "column_break_1",
+        "transaction_date",
+        "status",
+        "cost_center",
+        "scheduled_completion_date",
+        "section_break_1",
+        "inspection_checklist",
+        "amended_from"
+    ],
+    "fields": [
+        {
+            "fieldname": "inspection_id",
+            "fieldtype": "Data",
+            "label": "Inspection ID"
+        },
+        {
+            "fieldname": "renovation_work_order",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Renovation Work Order",
+            "options": "Renovation Work Order",
+            "reqd": 0
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Data",
+            "label": "Name of Tenant",
+            "options": null,
+            "read_only": 0
+        },
+        {
+            "fetch_from": "renovation_work_order.property_name",
+            "fieldname": "property_name",
+            "fieldtype": "Link",
+            "label": "Property Name",
+            "options": "Renovation Work Order Property",
+            "read_only": 0
+        },
+        {
+            "fetch_from": "renovation_work_order.unit",
+            "fieldname": "unit",
+            "fieldtype": "Data",
+            "label": "Unit",
+            "read_only": 0
+        },
+        {
+            "fieldname": "facilities_management_company",
+            "fieldtype": "Data",
+            "label": "Facilities Management Company",
+            "default": "Al Maidana General Contracting & Maintenance",
+            "read_only": 0,
+            "insert_after": "unit"
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "Today",
+            "fieldname": "transaction_date",
+            "fieldtype": "Date",
+            "label": "Move-Out Inspection Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "report_preparation_date",
+            "fieldtype": "Date",
+            "label": "Report Preparation Date",
+            "default": "Today",
+            "reqd": 1,
+            "insert_after": "transaction_date"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Draft\nSubmitted\nCancelled\nQuotation Created",
+            "default": "Draft",
+            "read_only": 1,
+            "no_copy": 1
+        },
+        {
+            "fieldname": "cost_center",
+            "fieldtype": "Link",
+            "label": "Cost Center",
+            "options": "Cost Center",
+            "reqd": 1,
+            "insert_after": "status"
+        },
+        {
+            "fieldname": "scheduled_completion_date",
+            "fieldtype": "Date",
+            "label": "Move-Out Date",
+            "reqd": 1,
+            "insert_after": "cost_center"
+        },
+        {
+            "fieldname": "section_break_1",
+            "fieldtype": "Section Break",
+            "label": "Checklist"
+        },
+        {
+            "allow_bulk_edit": 1,
+            "fieldname": "inspection_checklist",
+            "fieldtype": "Table",
+            "label": "Inspection Checklist",
+            "options": "Inspection Checklist Item"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Renovation Inspection Report",
+            "print_hide": 1,
+            "read_only": 1
+        }
+    ],
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2025-01-24 19:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Renovation Erpnext Hook",
+    "name": "Renovation Inspection Report",
+    "naming_series": "RIR-.YYYY.-",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1,
+            "cancel": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}

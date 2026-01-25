@@ -1,0 +1,15 @@
+{
+	"doctype": "Print Format",
+	"doc_type": "Renovation Inspection Report",
+	"format": "Relaam Inspection Checklist",
+	"module": "Renovation Erpnext Hook",
+	"name": "Relaam Inspection Checklist",
+	"print_format_builder": 0,
+	"print_format_type": "Jinja",
+	"standard": "Yes",
+	"margin_top": 25,
+	"margin_bottom": 15,
+	"margin_left": 3,
+	"margin_right": 3,
+	"html": "relaam_inspection_checklist.html"
+}
