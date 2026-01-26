@@ -196,7 +196,7 @@ class RenovationWorkOrderModifyRequest(Document):
 		if self.work_order_no:
 			doctype = 'Renovation Work Order'
 			prev_assigned = []
-			for assign_to in frappe.db.sql_list("""select owner from `tabToDo`
+			for assign_to in frappe.db.sql_list("""select allocated_to from `tabToDo`
 				where reference_type=%(doctype)s and reference_name=%(name)s""", {"doctype": doctype, "name":self.work_order_no}):
 				prev_assigned.append(assign_to)
 				remove(doctype, self.work_order_no, assign_to)
