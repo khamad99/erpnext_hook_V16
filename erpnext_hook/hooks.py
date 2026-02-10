@@ -20,6 +20,10 @@ fixtures = [
     {
         "dt": "Property Setter",
         "filters": [["app_name", "=", "erpnext_hook"]]
+    },
+    {
+        "dt": "Custom DocPerm",
+        "filters": [["parent", "=", "Workflow"]]
     }, "Renovation Proposal", "Renovation Work Order Type", "Renovation Work Order Status",
     {
         "dt": "Workflow",
