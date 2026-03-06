@@ -1,29 +1,241 @@
 {
-	"charts": [],
-	"content": "[{\"label\":\"Renovation\",\"type\":\"Header\"},{\"label\":\"Work Orders\",\"type\":\"Card\",\"links\":[{\"label\":\"Renovation Work Order\",\"name\":\"Renovation Work Order\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Work Order\"},{\"label\":\"Renovation Work Order Type\",\"name\":\"Renovation Work Order Type\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Work Order Type\"},{\"label\":\"Renovation Work Order Status\",\"name\":\"Renovation Work Order Status\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Work Order Status\"},{\"label\":\"Renovation Work Order Modify Request\",\"name\":\"Renovation Work Order Modify Request\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Work Order Modify Request\"},{\"label\":\"Renovation Modify Task\",\"name\":\"Renovation Modify Task\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Modify Task\"},{\"label\":\"Renovation Job Order Attachment\",\"name\":\"Renovation Job Order Attachment\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Job Order Attachment\"}]},{\"label\":\"Clients & Projects\",\"type\":\"Card\",\"links\":[{\"label\":\"Renovation Client\",\"name\":\"Renovation Client\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Client\"},{\"label\":\"Master Project\",\"name\":\"Master Project\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Master Project\"},{\"label\":\"Renovation Proposal\",\"name\":\"Renovation Proposal\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Proposal\"},{\"label\":\"Renovation Tenant\",\"name\":\"Renovation Tenant\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Tenant\"}]},{\"label\":\"Inspections\",\"type\":\"Card\",\"links\":[{\"label\":\"Renovation Inspection Report\",\"name\":\"Renovation Inspection Report\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Inspection Report\"},{\"label\":\"Inspection Checklist Item\",\"name\":\"Inspection Checklist Item\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Inspection Checklist Item\"}]},{\"label\":\"Setup & Utilities\",\"type\":\"Card\",\"links\":[{\"label\":\"Renovation Priority\",\"name\":\"Renovation Priority\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Priority\"},{\"label\":\"Renovation Work Order Property\",\"name\":\"Renovation Work Order Property\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Renovation Work Order Property\"},{\"label\":\"Attachment Status\",\"name\":\"Attachment Status\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Attachment Status\"},{\"label\":\"Correspondence\",\"name\":\"Correspondence\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Correspondence\"},{\"label\":\"Correspondence CC\",\"name\":\"Correspondence CC\",\"type\":\"Link\",\"link_type\":\"DocType\",\"link_to\":\"Correspondence CC\"}]}]",
-	"creation": "2024-05-22 10:00:00.000000",
-	"custom_blocks": [],
-	"docstatus": 0,
-	"doctype": "Workspace",
-	"for_user": "",
-	"hide_custom": 0,
-	"icon": "working",
-	"idx": 0,
-	"indicator_color": "green",
-	"is_standard": 1,
-	"label": "Renovation",
-	"links": [],
-	"modified": "2024-05-22 10:00:00.000000",
-	"modified_by": "Administrator",
-	"module": "Renovation Erpnext Hook",
-	"name": "Renovation",
-	"owner": "Administrator",
-	"parent_dtype": "",
-	"parent_field": "",
-	"parent_value": "",
-	"public": 1,
-	"roles": [],
-	"sequence_id": 1,
-	"shortcuts": [],
-	"title": "Renovation"
+    "charts": [
+        {
+            "chart_name": "Monthly Work Orders",
+            "label": "Monthly Work Orders"
+        },
+        {
+            "chart_name": "Not To Exceed Amount",
+            "label": "Not To Exceed Amount"
+        }
+    ],
+    "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Renovation Management\",\"level\":3,\"col\":12}},{\"type\":\"chart\",\"data\":{\"chart_name\":\"Monthly Work Orders\",\"col\":6}},{\"type\":\"chart\",\"data\":{\"chart_name\":\"Not To Exceed Amount\",\"col\":6}},{\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Work Orders - Pending\",\"col\":4}},{\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending Quotations\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Work Orders\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Clients & Projects\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Inspections\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Setup & Utilities\",\"col\":4}}]",
+    "creation": "2024-05-22 10:00:00.000000",
+    "custom_blocks": [],
+    "docstatus": 0,
+    "doctype": "Workspace",
+    "for_user": "",
+    "hide_custom": 0,
+    "icon": "working",
+    "idx": 0,
+    "indicator_color": "green",
+    "is_standard": 1,
+    "label": "Renovation",
+    "links": [
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Work Orders",
+            "link_count": 0,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Work Order",
+            "link_count": 0,
+            "link_to": "Renovation Work Order",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Work Order Type",
+            "link_count": 0,
+            "link_to": "Renovation Work Order Type",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Work Order Status",
+            "link_count": 0,
+            "link_to": "Renovation Work Order Status",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Work Order Modify Request",
+            "link_count": 0,
+            "link_to": "Renovation Work Order Modify Request",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Modify Task",
+            "link_count": 0,
+            "link_to": "Renovation Modify Task",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Job Order Attachment",
+            "link_count": 0,
+            "link_to": "Renovation Job Order Attachment",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Clients & Projects",
+            "link_count": 0,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Client",
+            "link_count": 0,
+            "link_to": "Renovation Client",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Master Project",
+            "link_count": 0,
+            "link_to": "Master Project",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Proposal",
+            "link_count": 0,
+            "link_to": "Renovation Proposal",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Tenant",
+            "link_count": 0,
+            "link_to": "Renovation Tenant",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Inspections",
+            "link_count": 0,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Inspection Report",
+            "link_count": 0,
+            "link_to": "Renovation Inspection Report",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Inspection Checklist Item",
+            "link_count": 0,
+            "link_to": "Inspection Checklist Item",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Setup & Utilities",
+            "link_count": 0,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Priority",
+            "link_count": 0,
+            "link_to": "Renovation Priority",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Renovation Work Order Property",
+            "link_count": 0,
+            "link_to": "Renovation Work Order Property",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Attachment Status",
+            "link_count": 0,
+            "link_to": "Attachment Status",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Correspondence",
+            "link_count": 0,
+            "link_to": "Correspondence",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Correspondence CC",
+            "link_count": 0,
+            "link_to": "Correspondence CC",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        }
+    ],
+    "modified": "2026-01-26 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Renovation Erpnext Hook",
+    "name": "Renovation",
+    "owner": "Administrator",
+    "parent_dtype": "",
+    "parent_field": "",
+    "parent_value": "",
+    "public": 1,
+    "roles": [],
+    "sequence_id": 1,
+    "shortcuts": [],
+    "title": "Renovation"
 }

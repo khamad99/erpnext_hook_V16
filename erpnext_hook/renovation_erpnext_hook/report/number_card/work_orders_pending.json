@@ -1,0 +1,22 @@
+{
+	"aggregate_function_based_on": "",
+	"creation": "2024-05-22 10:00:00.000000",
+	"docstatus": 0,
+	"doctype": "Number Card",
+	"document_type": "Renovation Work Order",
+	"dynamic_filters_json": "[]",
+	"filters_json": "[[\"Renovation Work Order\",\"order_status\",\"!=\",\"Cancel Request\",false],[\"Renovation Work Order\",\"order_status\",\"!=\",\"Work Completed\",false],[\"Renovation Work Order\",\"order_status\",\"!=\",\"Request Reassignment\",false],[\"Renovation Work Order\",\"order_status\",\"!=\",\"Reassign to Insurance Vendor\",false],[\"Renovation Work Order\",\"order_status\",\"!=\",\"Change Category\",false],[\"Renovation Work Order\",\"order_type\",\"!=\",\"Awaiting Proposal\",false],[\"Renovation Work Order\",\"order_type\",\"!=\",\"Contract Installment\",false],[\"Renovation Work Order\",\"order_status\",\"!=\",\"Comp SLA Breach Clarified\",false],[\"Renovation Work Order\",\"order_status\",\"!=\",\"disappeared\",false]]",
+	"function": "Count",
+	"idx": 0,
+	"is_public": 1,
+	"is_standard": 1,
+	"label": "Work Orders - Pending",
+	"modified": "2024-05-22 10:00:00.000000",
+	"modified_by": "Administrator",
+	"module": "Renovation Erpnext Hook",
+	"name": "Work Orders - Pending",
+	"owner": "Administrator",
+	"show_percentage_stats": 1,
+	"stats_time_interval": "Monthly",
+	"type": "Document Type"
+}

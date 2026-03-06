@@ -121,6 +121,7 @@ has_permission = {
 
 doc_events = {
     "Expense Claim": {
+        "validate": "erpnext_hook.utils.expense_claim.validate_attachment",
         "on_submit": "erpnext_hook.utils.expense_claim.on_event_for_expense_claim",
         "on_cancel": "erpnext_hook.utils.expense_claim.on_event_for_expense_claim"
     },

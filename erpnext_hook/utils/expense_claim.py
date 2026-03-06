@@ -140,3 +140,25 @@ def get_payment_entry(dt, dn, party_amount=None, bank_account=None, bank_amount=
 		pe.set_exchange_rate()
 		pe.set_amounts()
 	return pe
+
+
+def validate_attachment(doc, method=None):
+	if doc.workflow_state in ["Need Review", "Reviewed", "Approved"] or doc.docstatus == 1:
+		attachments = frappe.db.get_all("File", 
+			filters={
+				"attached_to_doctype": doc.doctype,
+				"attached_to_name": doc.name
+			},
+			fields=["file_name", "file_url"]
+		)
+		
+		if not attachments:
+			frappe.throw(_("An attachment is compulsory before submitting an Expense Claim."))
+
+		allowed_extensions = ('.pdf', '.png', '.jpg', '.jpeg')
+		
+		for file in attachments:
+			# Check either file_name or file_url (if hosted externally)
+			name_to_check = (file.file_name or file.file_url or "").lower()
+			if not name_to_check.endswith(allowed_extensions):
+				frappe.throw(_("Invalid attachment format: {0}. Only PDF and Image files (.pdf, .png, .jpg, .jpeg) are allowed for Expense Claims.").format(name_to_check))
