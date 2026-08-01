@@ -12,26 +12,34 @@ ALLOWED_FILE_DOCTYPES = [
 
 def file_has_permission(doc, ptype=None, user=None, debug=False):
     """
-    Custom has_permission for File DocType.
+    Custom has_permission for File DocType in erpnext_hook.
     Allows all logged-in users to access files attached to Renovation DocTypes.
+    For out-of-scope files, standalone files, or unsaved parent documents,
+    delegates directly to Frappe's standard File has_permission logic.
     """
-    user = user or frappe.session.user
-    
-    # Debug logging
-    # frappe.log_error(f"file_has_permission called: attached_to={doc.attached_to_doctype}, user={user}", "File Perm Hook")
-    
-    # Check if file is attached to allowed Renovation DocTypes
-    if doc.attached_to_doctype in ALLOWED_FILE_DOCTYPES:
-        # Allow all users except Guest
-        if user != "Guest":
-            # frappe.log_error(f"Allowing access for {user} to {doc.attached_to_doctype}", "File Perm Hook")
+    from frappe.core.doctype.file.file import has_permission as frappe_file_has_permission
+
+    try:
+        user = user or frappe.session.user
+
+        if not doc:
+            return frappe_file_has_permission(doc, ptype=ptype, user=user, debug=debug)
+
+        attached_to_doctype = getattr(doc, "attached_to_doctype", None)
+
+        # 1. Enforce app-specific rules for Renovation DocTypes
+        if attached_to_doctype in ALLOWED_FILE_DOCTYPES:
+            if user == "Guest":
+                return False
             return True
-        # frappe.log_error(f"Denying Guest", "File Perm Hook")
-        return False
-    
-    # For other doctypes, return None to let standard permission system handle it
-    # Returning True allows access, False denies, None passes to next check (standard)
-    return True
+
+        # 2. For all other files (standalone, unsaved parent, or non-Renovation DocTypes),
+        # delegate to standard Frappe file permission check
+        return frappe_file_has_permission(doc, ptype=ptype, user=user, debug=debug)
+
+    except Exception as e:
+        frappe.log_error(f"Error in file_has_permission hook: {e}", "File Perm Hook")
+        return frappe_file_has_permission(doc, ptype=ptype, user=user, debug=debug)
 
 
 def renovation_attachment_has_permission(doc, ptype=None, user=None, debug=False):
