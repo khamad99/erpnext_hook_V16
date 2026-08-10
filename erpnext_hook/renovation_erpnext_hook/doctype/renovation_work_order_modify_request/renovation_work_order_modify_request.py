@@ -213,6 +213,7 @@ class RenovationWorkOrderModifyRequest(Document):
 					args = {
 						"assign_to": [assign_to],
 						"doctype": doctype,
-						"name": self.work_order_no 
+						"name": self.work_order_no,
+						"notify": False
 					}
 					add(args)
