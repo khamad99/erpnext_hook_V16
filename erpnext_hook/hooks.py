@@ -96,6 +96,9 @@ doctype_js = {
 # before_install = "erpnext_hook.install.before_install"
 # after_install = "erpnext_hook.install.after_install"
 
+# Removes the old custom Notification.email_template once frappe ships it as a standard field.
+after_migrate = ["erpnext_hook.utils.notification.remove_custom_email_template_field"]
+
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
