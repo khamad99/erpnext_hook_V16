@@ -127,6 +127,8 @@ doc_events = {
         "validate": [
             "erpnext_hook.utils.expense_claim.validate_attachment",
             "erpnext_hook.utils.expense_claim.set_cost_center_from_project",
+            "erpnext_hook.utils.expense_claim.set_vat_totals",
+            "erpnext_hook.utils.expense_claim.validate_sanctioned_vat",
         ],
         "on_submit": "erpnext_hook.utils.expense_claim.on_event_for_expense_claim",
         "on_cancel": "erpnext_hook.utils.expense_claim.on_event_for_expense_claim"

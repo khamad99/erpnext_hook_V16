@@ -164,6 +164,31 @@ def validate_attachment(doc, method=None):
 				frappe.throw(_("Invalid attachment format: {0}. Only PDF and Image files (.pdf, .png, .jpg, .jpeg) are allowed for Expense Claims.").format(name_to_check))
 
 
+def set_vat_totals(doc, method=None):
+	"""The header VAT totals are the sums of the lines (owner decision).
+
+	Runs in validate, so at every draft save and at submit, and the VAT rows
+	that on_event_for_expense_claim books equal the lines. Frappe does not run
+	validate at Update after Submit or Cancel, so a submitted claim keeps its
+	stored totals.
+	"""
+	doc.total_vat_amount = _sum_of_lines(doc, "vat_amount", "total_vat_amount")
+	doc.total_sanctioned_vat_amount = _sum_of_lines(doc, "sanctioned_vat_amount", "total_sanctioned_vat_amount")
+
+
+def validate_sanctioned_vat(doc, method=None):
+	"""A line's sanctioned VAT is never above its VAT (owner decision), as hrms
+	refuses for the sanctioned amount. Compared at the field precision."""
+	for row in doc.expenses:
+		precision = row.precision("vat_amount")
+		if flt(row.sanctioned_vat_amount, precision) > flt(row.vat_amount, precision):
+			frappe.throw(_("Sanctioned VAT Amount cannot be greater than VAT Amount in Row {0}.").format(row.idx))
+
+
+def _sum_of_lines(doc, field, total):
+	return flt(sum(flt(row.get(field)) for row in doc.expenses), doc.precision(total))
+
+
 def set_cost_center_from_project(doc, method=None):
 	"""Pre-fill a draft claim's cost centre from its project (validate).
 
