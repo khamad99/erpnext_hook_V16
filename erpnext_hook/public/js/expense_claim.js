@@ -71,34 +71,42 @@ frappe.ui.form.on("Expense Claim Detail", {
 
 	vat_amount: function (frm, cdt, cdn) {
 		var child = locals[cdt][cdn];
-		var doc = frm.doc;
 
 		if (!child.sanctioned_vat_amount) {
 			frappe.model.set_value(cdt, cdn, 'sanctioned_vat_amount', child.vat_amount);
 		}
 
-		cur_frm.cscript.calculate_vat_total(doc, cdt, cdn);
+		cur_frm.cscript.calculate_vat_total(frm.doc);
 	},
 
-	sanctioned_vat_amount: function (frm, cdt, cdn) {
-		var doc = frm.doc;
-		cur_frm.cscript.calculate_vat_total(doc, cdt, cdn);
+	sanctioned_vat_amount: function (frm) {
+		cur_frm.cscript.calculate_vat_total(frm.doc);
 	},
 	expenses_remove: function (frm) {
-		var doc = frm.doc;
-		cur_frm.cscript.calculate_vat_total(doc, cdt, cdn);
+		cur_frm.cscript.calculate_vat_total(frm.doc);
+	},
+	// "Delete all rows" fires only this event. A delete of several rows fires it last.
+	expenses_delete: function (frm) {
+		cur_frm.cscript.calculate_vat_total(frm.doc);
+	},
+	// "Duplicate rows" copies the VAT and fires only this event.
+	expenses_add: function (frm) {
+		cur_frm.cscript.calculate_vat_total(frm.doc);
 	}
 
 });
 
 
+// The same sums as the save (set_vat_totals). An empty VAT cell counts as 0.
 cur_frm.cscript.calculate_vat_total = function (doc) {
-	doc.total_vat_amount = 0;
-	doc.total_sanctioned_vat_amount = 0;
+	var total_vat = 0;
+	var total_sanctioned_vat = 0;
 	$.each((doc.expenses || []), function (i, d) {
-		doc.total_vat_amount += d.vat_amount;
-		doc.total_sanctioned_vat_amount += d.sanctioned_vat_amount;
+		total_vat += flt(d.vat_amount);
+		total_sanctioned_vat += flt(d.sanctioned_vat_amount);
 	});
+	doc.total_vat_amount = flt(total_vat, precision("total_vat_amount"));
+	doc.total_sanctioned_vat_amount = flt(total_sanctioned_vat, precision("total_sanctioned_vat_amount"));
 
 	refresh_field("total_vat_amount");
 	refresh_field('total_sanctioned_vat_amount');
