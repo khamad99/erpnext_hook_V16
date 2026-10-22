@@ -3,6 +3,7 @@
 
 frappe.ui.form.on("Expense Claim", {
 	refresh: function (frm) {
+		frm._project_for_cost_center = frm.doc.project;
 		if (frm.doc.workflow_state === 'Reviewed' || frm.doc.status === 'Reviewed' || frm.doc.approval_status === 'Reviewed') {
 			setTimeout(() => {
 				if (frm.page.menu) {
@@ -10,6 +11,28 @@ frappe.ui.form.on("Expense Claim", {
 				}
 			}, 100);
 		}
+	},
+	project: function (frm) {
+		// Same rule as the save (set_cost_center_from_project). Drafts only: an
+		// edit on a submitted claim would re-post its ledger on Update.
+		const old_project = frm._project_for_cost_center;
+		frm._project_for_cost_center = frm.doc.project;
+		if (frm.doc.docstatus !== 0 || !frm.doc.company) return;
+
+		frappe.call({
+			method: 'erpnext_hook.utils.expense_claim.get_header_cost_center',
+			args: {
+				company: frm.doc.company,
+				project: frm.doc.project,
+				old_project: old_project,
+				cost_center: frm.doc.cost_center
+			},
+			callback: function (r) {
+				if (r.message && r.message !== frm.doc.cost_center) {
+					frm.set_value('cost_center', r.message);
+				}
+			}
+		});
 	},
 	make_payment_entry: function (frm) {
 		return frappe.call({

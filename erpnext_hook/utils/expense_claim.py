@@ -162,3 +162,69 @@ def validate_attachment(doc, method=None):
 			name_to_check = (file.file_name or file.file_url or "").lower()
 			if not name_to_check.endswith(allowed_extensions):
 				frappe.throw(_("Invalid attachment format: {0}. Only PDF and Image files (.pdf, .png, .jpg, .jpeg) are allowed for Expense Claims.").format(name_to_check))
+
+
+def set_cost_center_from_project(doc, method=None):
+	"""Pre-fill a draft claim's cost centre from its project (validate).
+
+	Header: on a new claim, or the save where the project changes, a header that
+	is empty, the company default or the old project's cost centre is not the
+	user's choice. It takes the project's Default Cost Center, else the company
+	default. Lines: a line that is empty, on the company default or on the
+	header's previous value follows the header. Any other value stays.
+
+	Drafts only. Submit runs validate with docstatus 1, and a change on a
+	submitted claim would re-post its ledger and drop the VAT rows that
+	on_event_for_expense_claim books.
+	"""
+	if doc.docstatus != 0 or not doc.company:
+		return
+
+	sent = doc.cost_center
+	if doc.has_value_changed("project"):
+		doc.cost_center = pick_header_cost_center(
+			doc.company, doc.project, doc.get_value_before_save("project"), doc.cost_center
+		)
+	if not doc.cost_center:
+		return
+
+	company_cc = frappe.get_cached_value("Company", doc.company, "cost_center")
+	follow = {None, "", company_cc, sent, doc.get_value_before_save("cost_center")}
+	for row in doc.expenses:
+		if row.cost_center in follow:
+			row.cost_center = doc.cost_center
+
+
+@frappe.whitelist()
+def get_header_cost_center(
+	company: str, project: str | None = None, old_project: str | None = None, cost_center: str | None = None
+):
+	"""The Desk form's header after a project change: the same rule as the save."""
+	if project:
+		frappe.has_permission("Project", "select", project, throw=True)
+	return pick_header_cost_center(company, project, old_project, cost_center)
+
+
+def pick_header_cost_center(company, project, old_project, cost_center):
+	"""The header for a claim whose project is new or changed.
+
+	A header that is set and is neither the company default nor the old
+	project's cost centre is the user's choice and stays. Otherwise: the
+	project's cost centre, if it is enabled and of this company, else the
+	company default.
+	"""
+	company_cc = frappe.get_cached_value("Company", company, "cost_center")
+	old_project_cc = frappe.db.get_value("Project", old_project, "cost_center") if old_project else None
+	if cost_center and cost_center not in (company_cc, old_project_cc):
+		return cost_center
+	return _usable_project_cost_center(company, project) or company_cc or cost_center
+
+
+def _usable_project_cost_center(company, project):
+	cost_center = project and frappe.db.get_value("Project", project, "cost_center")
+	if not cost_center:
+		return None
+	disabled, cc_company = frappe.db.get_value("Cost Center", cost_center, ["disabled", "company"])
+	if disabled or cc_company != company:
+		return None
+	return cost_center
