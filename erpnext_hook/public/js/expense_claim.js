@@ -4,6 +4,7 @@
 frappe.ui.form.on("Expense Claim", {
 	refresh: function (frm) {
 		frm._project_for_cost_center = frm.doc.project;
+		frm._cost_center_for_lines = frm.doc.cost_center;
 		if (frm.doc.workflow_state === 'Reviewed' || frm.doc.status === 'Reviewed' || frm.doc.approval_status === 'Reviewed') {
 			setTimeout(() => {
 				if (frm.page.menu) {
@@ -34,6 +35,16 @@ frappe.ui.form.on("Expense Claim", {
 			}
 		});
 	},
+	cost_center: function (frm) {
+		// The header moved (project handler or by hand). hrms's own handler has
+		// filled the empty lines; move the lines on the company default or the
+		// old header too, as the save does. An emptied header moves nothing, so
+		// the last header that was set stays the old one.
+		const old_header = frm._cost_center_for_lines;
+		if (!frm.doc.cost_center) return;
+		frm._cost_center_for_lines = frm.doc.cost_center;
+		set_lines_cost_center_from_header(frm, frm.doc.expenses || [], old_header);
+	},
 	make_payment_entry: function (frm) {
 		return frappe.call({
 			method: 'erpnext_hook.utils.expense_claim.get_payment_entry',
@@ -51,6 +62,13 @@ frappe.ui.form.on("Expense Claim", {
 
 
 frappe.ui.form.on("Expense Claim Detail", {
+	expense_type: function (frm, cdt, cdn) {
+		// hrms fills the line with the company default after a server call. Its
+		// handler loads first, and the form waits for the call it returns before
+		// running this one, so this runs after the fill.
+		set_lines_cost_center_from_header(frm, [locals[cdt][cdn]]);
+	},
+
 	vat_amount: function (frm, cdt, cdn) {
 		var child = locals[cdt][cdn];
 		var doc = frm.doc;
@@ -85,3 +103,23 @@ cur_frm.cscript.calculate_vat_total = function (doc) {
 	refresh_field("total_vat_amount");
 	refresh_field('total_sanctioned_vat_amount');
 };
+
+
+function set_lines_cost_center_from_header(frm, lines, old_header) {
+	// The line part of the save rule (set_cost_center_from_project), so the screen
+	// shows what the save stores: a line that is empty, on the company default or
+	// on the old header takes the header. Any other value is the user's choice.
+	// Drafts only.
+	const header = frm.doc.cost_center;
+	if (frm.doc.docstatus !== 0 || !frm.doc.company || !header) return;
+
+	// The boot loads each Company with its cost_center, so no server call is needed.
+	const company_default = frappe.get_doc(":Company", frm.doc.company)?.cost_center;
+	const follows = [company_default, old_header].filter(Boolean);
+	lines.forEach((line) => {
+		if (!line || line.cost_center === header) return;
+		if (!line.cost_center || follows.includes(line.cost_center)) {
+			frappe.model.set_value(line.doctype, line.name, 'cost_center', header);
+		}
+	});
+}
